@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbjudan till Byte</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<style>:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 2rem 1.25rem 4rem;
+  background: #F6F0E6;
+  color: #1C1916;
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 44rem; margin: 0 auto; }
+header { text-align: center; margin-bottom: 2rem; }
+h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 .35rem; text-wrap: balance; }
+.updated { color: #746C63; font-size: .85rem; margin: 0; }
+section, .intro {
+  background: #FFFFFF;
+  border: 1px solid #EDE3D5;
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: .6rem;
+}
+h2 { font-size: 1rem; margin: 0 0 .5rem; letter-spacing: -.01em; }
+p { margin: 0; color: #3F3A34; white-space: pre-wrap; }
+.intro p { font-size: 1.02rem; }
+footer {
+  color: #746C63;
+  font-size: .78rem;
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.5;
+}
+nav { text-align: center; margin-top: 2rem; font-size: .85rem; }
+nav a { color: #0C7A56; margin: 0 .5rem; }
+a:focus-visible, nav a:focus-visible {
+  outline: 2px solid #0C7A56;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+.cta { display: block; text-align: center; background: #0C7A56; color: #fff;
+  font-weight: 800; text-decoration: none; padding: .9rem 1rem; border-radius: 999px;
+  margin: 1rem 0 .5rem; }
+.secondary { display: block; text-align: center; color: #0C7A56; margin: .5rem 0; }
+.code { text-align: center; font-size: 1.6rem; font-weight: 900; letter-spacing: .15em;
+  color: #1C1916; margin: .75rem 0 .25rem; white-space: nowrap; }
+.hint { text-align: center; color: #746C63; font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="title">En granne bjuder in dig till Byte</h1>
+    <p class="updated">Lokal hjälp och utlåning — utan drama</p>
+  </header>
+  <div class="intro"><p>Byte är grannar som lånar ut, ber om och erbjuder hjälp i sitt närområde. Privat chatt, inga betalningar, inget nationellt flöde. Går du med via inbjudan hamnar du i samma område som grannen som bjöd in dig.</p></div>
+  <section>
+    <a class="cta" id="open" href="byte://">Öppna inbjudan i appen</a>
+    <a class="secondary" href="https://play.google.com/store/apps/details?id=se.byte.app">Hämta Byte på Google Play</a>
+    <p class="code" id="code" hidden></p>
+    <p class="hint">Har du precis installerat appen? Välj <strong>Har du en inbjudningskod?</strong> när den frågar var du bor, och skriv in koden (den står här ovanför, eller i meddelandet från grannen).</p>
+  </section>
+  <nav><a href="./privacy.html">Integritetspolicy</a><a href="./terms.html">Användarvillkor</a><a href="./radera-konto.html">Radera ditt konto</a></nav>
+</main>
+<script>
+  (function () {
+    // "#CODE" from Bjud in grannar, or "#CODE/p/<postId>" from Dela on a post.
+    var frag = (location.hash || "").slice(1).split("/p/");
+    var raw = frag[0].toUpperCase().replace(/[^0-9A-Z]/g, "");
+    if (!/^[2-9A-HJKMNP-Z]{8}$/.test(raw)) return;
+    var post = /^[A-Za-z0-9_-]{6,64}$/.test(frag[1] || "") ? frag[1] : null;
+    var code = document.getElementById("code");
+    code.textContent = raw.slice(0, 4) + "-" + raw.slice(4);
+    code.hidden = false;
+    var open = document.getElementById("open");
+    open.href = post ? "byte://post/" + post : "byte://invite/" + raw;
+    if (post) {
+      document.getElementById("title").textContent = "En granne delade en annons med dig";
+      open.textContent = "Öppna annonsen i appen";
+    }
+  })();
+</script>
+</body>
+</html>
